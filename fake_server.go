@@ -1,4 +1,4 @@
-package accountapi
+package apimock
 
 import (
 	"io/ioutil"
@@ -21,19 +21,19 @@ type ExecutedEndpointCall struct {
 	RequestHeaders    map[string][]string
 }
 
-type FakeAccountApi struct {
+type FakeApi struct {
 	ExecutedEndpointCalls []ExecutedEndpointCall
 	HttpTestServer        *httptest.Server
 }
 
-func (fakeApi *FakeAccountApi) AddExecutedEndpointCall(item ExecutedEndpointCall) []ExecutedEndpointCall {
+func (fakeApi *FakeApi) AddExecutedEndpointCall(item ExecutedEndpointCall) []ExecutedEndpointCall {
 	fakeApi.ExecutedEndpointCalls = append(fakeApi.ExecutedEndpointCalls, item)
 	return fakeApi.ExecutedEndpointCalls
 }
 
-func StartFakeAccountAPIServer(t *testing.T, fakeEndpoints []*FakeEndpoint) *FakeAccountApi {
+func StartFakeAPIServer(t *testing.T, fakeEndpoints []*FakeEndpoint) *FakeApi {
 
-	fakeApi := &FakeAccountApi{
+	fakeApi := &FakeApi{
 		ExecutedEndpointCalls: []ExecutedEndpointCall{},
 	}
 
@@ -64,6 +64,6 @@ func StartFakeAccountAPIServer(t *testing.T, fakeEndpoints []*FakeEndpoint) *Fak
 	return fakeApi
 }
 
-func (fakeApi *FakeAccountApi) stop() {
+func (fakeApi *FakeApi) stop() {
 	fakeApi.HttpTestServer.Close()
 }
